@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "642220695567",
+    "project_id": "rewear-crowd",
+    "storage_bucket": "rewear-crowd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642220695567:android:d79bef2b52ff7e7a06837a",
+        "android_client_info": {
+          "package_name": "com.rewear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642220695567-6noh53cgi3rbiq7ase68252vgc55spld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rewear",
+            "certificate_hash": "1f3212dbf4f3d3fc8abe34eae261d88d277b29a6"
+          }
+        },
+        {
+          "client_id": "642220695567-iphb98vkun9bprae7bfjbl61l208otbu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGzjCCgDKo6I26atZbWXeohZ5K8kDurJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642220695567-iphb98vkun9bprae7bfjbl61l208otbu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>642220695567-rokm8sr50soblat2n42m1fpa9lmfspq1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.642220695567-rokm8sr50soblat2n42m1fpa9lmfspq1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>642220695567-6noh53cgi3rbiq7ase68252vgc55spld.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCTrJlP95vxsZ1wA2-jxH8B-fl3ETzF8n4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>642220695567</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.rewear</string>
+	<key>PROJECT_ID</key>
+	<string>rewear-crowd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rewear-crowd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:642220695567:ios:7440a5807e111bba06837a</string>
+</dict>
+</plist>
