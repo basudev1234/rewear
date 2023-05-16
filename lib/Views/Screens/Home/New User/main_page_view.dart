@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rewear/Core/Server/request.dart';
 import 'package:rewear/Core/Services/location_service.dart';
 import 'package:rewear/Views/Screens/Home/Main%20Screens/main_screen.dart';
@@ -42,12 +45,8 @@ class _MainPageViewState extends State<MainPageView>
       "icon": FontAwesomeIcons.venus,
     },
     {
-      "name": "Transmale",
+      "name": "Others",
       "icon": FontAwesomeIcons.mercury,
-    },
-    {
-      "name": "Transfemale",
-      "icon": FontAwesomeIcons.transgender,
     },
   ];
 
@@ -89,7 +88,7 @@ class _MainPageViewState extends State<MainPageView>
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "Step ${Provider.of<MainPageViewProvider>(context).inde.toInt() + 1} of 5",
+          "Step ${Provider.of<MainPageViewProvider>(context).inde.toInt() + 1} of 4",
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w400,
@@ -167,7 +166,8 @@ class _MainPageViewState extends State<MainPageView>
                       ));
                     }
                   },
-                  color: Color.fromRGBO(138, 154, 91, 1),
+                  // color: Color.fromRGBO(138, 154, 91, 1),
+                  color: Colors.black,
                   minWidth: Get.width,
                   height: Get.height * 0.065,
                   shape: RoundedRectangleBorder(
@@ -251,7 +251,7 @@ class _MainPageViewState extends State<MainPageView>
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.ease);
                     },
-                    color: Color.fromRGBO(138, 154, 91, 1),
+                    color: Colors.black,
                     minWidth: Get.width,
                     height: Get.height * 0.065,
                     shape: RoundedRectangleBorder(
@@ -304,7 +304,7 @@ class _MainPageViewState extends State<MainPageView>
                       builder: (context, provider, child) {
                     return Column(
                       children: List.generate(
-                        4,
+                        3,
                         (index) => InkWell(
                           onTap: () {
                             provider.updateChoice(index: index);
@@ -316,7 +316,7 @@ class _MainPageViewState extends State<MainPageView>
                             padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               color: provider.choice == index
-                                  ? Color.fromRGBO(138, 154, 91, 1)
+                                  ? Colors.black
                                   : null,
                               border: Border.all(color: Colors.grey),
                             ),
@@ -358,7 +358,7 @@ class _MainPageViewState extends State<MainPageView>
                           duration: const Duration(milliseconds: 100),
                           curve: Curves.ease);
                     },
-                    color: Color.fromRGBO(138, 154, 91, 1),
+                    color: Colors.black,
                     minWidth: Get.width,
                     height: Get.height * 0.065,
                     shape: RoundedRectangleBorder(
@@ -383,107 +383,6 @@ class _MainPageViewState extends State<MainPageView>
             ),
           ),
 
-          Padding(
-            padding: const EdgeInsets.all(
-              20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      controller.previousPage(
-                          duration: const Duration(milliseconds: 100),
-                          curve: Curves.easeOut);
-                    },
-                    child: const Text("< Back")),
-                Text(
-                  "What do you do , ${_textEditingController.text}?",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Consumer<MainPageViewProvider>(
-                    builder: (context, choice, child) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    // direction: Axis.horizontal,
-                    children: List.generate(
-                      4,
-                      (index) => InkWell(
-                          onTap: () {
-                            choice.updateProfession(prof: index);
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  // shape: BoxShape.circle,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(
-                                      50,
-                                    ),
-                                  ),
-                                  border: choice.profession == index
-                                      ? Border.all(
-                                          color: const Color(0XFF0059B9),
-                                          width: 2)
-                                      : null,
-                                ),
-                                width: choice.profession == index
-                                    ? Get.width * 0.2
-                                    : Get.width * 0.15,
-                                child: Image.asset(
-                                  _profession[index]["images"],
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              Text(_profession[index]["name"])
-                            ],
-                          )),
-                    ),
-                  );
-                }),
-                const SizedBox(
-                  height: 50,
-                ),
-                MaterialButton(
-                  elevation: 5,
-                  onPressed: () {
-                    controller.nextPage(
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.ease);
-                  },
-                  color: const Color(0XFF0059B9),
-                  minWidth: Get.width,
-                  height: Get.height * 0.065,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      100,
-                    ),
-                  ),
-                  child: const Text(
-                    "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 60,
-                )
-              ],
-            ),
-          ),
           // This is the fifth widget
           Padding(
             padding: const EdgeInsets.all(
@@ -520,12 +419,10 @@ class _MainPageViewState extends State<MainPageView>
                 RoundedLoadingButton(
                   successColor: Colors.green,
                   width: Get.width * 0.9,
-                  color: const Color(0XFF0059B9),
+                  color: Colors.black,
                   controller: _btnController,
                   onPressed: () async {
-                    var pos = await determinePosition();
-
-                    Map data = {
+                    Map<String, dynamic> data = {
                       "user_first_name": _textEditingController.text,
                       "user_last_name": _lastName.text,
                       "gender": {
@@ -544,25 +441,13 @@ class _MainPageViewState extends State<MainPageView>
                                 listen: false)
                             .dob,
                       ),
-                      "location": {
-                        "longitude": pos.longitude,
-                        "latitude": pos.latitude,
-                      },
-                      "category": {
-                        "prof_category_id": Provider.of<MainPageViewProvider>(
-                              context,
-                              listen: false,
-                            ).profession +
-                            1,
-                        "label": _profession[Provider.of<MainPageViewProvider>(
-                          context,
-                          listen: false,
-                        ).profession]["name"]
-                      },
                     };
 
-                    var res = await Server().saveWelcomeData(data: data);
-                    if (res != null) {
+                    var res = await FirebaseFirestore.instance
+                        .collection("user")
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .set(data)
+                        .whenComplete(() {
                       _btnController.success();
                       Navigator.of(context).pushReplacement(
                         (MaterialPageRoute(
@@ -573,15 +458,7 @@ class _MainPageViewState extends State<MainPageView>
                           msg: "Successful",
                           textColor: Colors.white,
                           backgroundColor: Colors.green);
-                    } else {
-                      _btnController.error();
-                      Timer(
-                        const Duration(seconds: 4),
-                        () {
-                          _btnController.reset();
-                        },
-                      );
-                    }
+                    });
                   },
                   child: const Text(
                     "Enable Location",

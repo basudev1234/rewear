@@ -20,6 +20,7 @@ import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
+import 'package:rewear/Views/Screens/Home/New%20User/main_page_view.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -54,7 +55,7 @@ class _AuthScreenState extends State<AuthScreen> {
               await FirebaseAuth.instance.signInAnonymously().whenComplete(
                     () => Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => const MainScreen(),
+                        builder: (context) => const MainPageView(),
                       ),
                     ),
                   );

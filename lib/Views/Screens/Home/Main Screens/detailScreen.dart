@@ -4,13 +4,19 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/route_manager.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  late Map data;
+
+  DetailScreen({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,8 +48,12 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                decoration: const BoxDecoration(
-                  color: Colors.black,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                        data["imageURL"][0],
+                      ),
+                      fit: BoxFit.cover),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(
                       30,
@@ -55,6 +65,27 @@ class DetailScreen extends StatelessWidget {
               )
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              data["title"],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              data["description"],
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -65,6 +96,9 @@ class DetailScreen extends StatelessWidget {
             MaterialButton(
               child: Text(
                 "BUY NOW",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -75,7 +109,7 @@ class DetailScreen extends StatelessWidget {
               ),
               height: Get.height * 0.08,
               minWidth: Get.width * 0.54,
-              color: Colors.greenAccent,
+              color: Colors.black,
               onPressed: () {},
             ),
             SizedBox(
@@ -83,14 +117,14 @@ class DetailScreen extends StatelessWidget {
             ),
             RichText(
               text: TextSpan(
-                text: "₹100",
+                text: "₹" + data["originalPrice"],
                 style: TextStyle(
                     color: Colors.red,
                     fontSize: 14,
                     decoration: TextDecoration.lineThrough),
                 children: [
                   TextSpan(
-                      text: "     ₹70",
+                      text: "     ₹" + data["price"],
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

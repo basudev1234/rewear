@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,6 +11,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:rewear/Core/Model/category.dart';
+import 'package:rewear/Views/Screens/Home/Main%20Screens/gender.dart';
+import 'package:rewear/Views/Screens/Home/Main%20Screens/swap.dart';
+import 'package:rewear/Views/Screens/Home/Main%20Screens/who.dart';
+import 'package:rewear/Views/Screens/Home/add_product.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../../../../Core/Provider/choice_chip_provider.dart';
@@ -34,8 +39,30 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "ReWear",
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    CupertinoPageRoute(
+                      builder: (context) => Who(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(
+                        30,
+                      ),
+                    ),
+                  ),
+                  height: Get.height * 0.4,
+                  child: Image.asset(
+                    'Assets/logo/logo.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 40,
@@ -43,17 +70,45 @@ class _HomeState extends State<Home> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  topWidgets(
-                    textArg: "Rent",
-                    colorArg: Colors.greenAccent,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => Swap(title: 'Rent'),
+                        ),
+                      );
+                    },
+                    child: topWidgets(
+                      textArg: "Rent",
+                      image: 'Assets/dummy/rent.jpg',
+                      colorArg: Colors.greenAccent,
+                    ),
                   ),
-                  topWidgets(
-                    textArg: "Donate",
-                    colorArg: Colors.amberAccent,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(builder: (context) => AddProducts()),
+                      );
+                    },
+                    child: topWidgets(
+                      textArg: "Donate",
+                      image: 'Assets/dummy/donate.jpg',
+                      colorArg: Colors.amberAccent,
+                    ),
                   ),
-                  topWidgets(
-                    textArg: "Swap",
-                    colorArg: Colors.orangeAccent,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => Swap(title: 'Swap'),
+                        ),
+                      );
+                    },
+                    child: topWidgets(
+                      image: 'Assets/dummy/swap.jpg',
+                      textArg: "Swap",
+                      colorArg: Colors.orangeAccent,
+                    ),
                   ),
                 ],
               ),
@@ -62,20 +117,29 @@ class _HomeState extends State<Home> {
               ),
               CarouselSlider(
                   items: List.generate(
-                      4,
-                      (index) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                    imageList[index],
-                                  ),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(
-                                14,
+                      3,
+                      (index) => GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) => Swap(title: 'SALE !'),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                      imageList[index],
+                                    ),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(
+                                  14,
+                                ),
+                                color: Colors.greenAccent,
                               ),
-                              color: Colors.greenAccent,
+                              // color: Colors.amber,
                             ),
-                            // color: Colors.amber,
                           )),
                   options: CarouselOptions(
                     height: Get.height * 0.25,
@@ -84,6 +148,7 @@ class _HomeState extends State<Home> {
                     initialPage: 0,
                     enableInfiniteScroll: true,
                     reverse: false,
+
                     autoPlay: true,
                     autoPlayInterval: Duration(seconds: 3),
                     autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -140,7 +205,15 @@ class _HomeState extends State<Home> {
                         ),
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) => Gender(
+                                    title: category2.keys.elementAt(index),
+                                  ),
+                                ),
+                              );
+                            },
                             child: Container(
                               child: Column(
                                 mainAxisAlignment:
@@ -190,7 +263,10 @@ class _HomeState extends State<Home> {
                         ),
                         MaterialButton(
                           child: Text("More"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Swap(title: "")));
+                          },
                           color: Colors.greenAccent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
@@ -198,78 +274,122 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(
-                      15,
-                    ),
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                          10,
-                          (index) => InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (context) => DetailScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 9, left: 9, bottom: 10),
-                                  child: Material(
-                                    borderRadius: BorderRadius.circular(14),
-                                    elevation: 10,
-                                    child: Container(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(14),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Image.network(
-                                              imageList[1],
-                                              height: Get.height * 0.18,
-                                              width: Get.width * 0.38,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text("   Title"),
-                                                Text("#100   ")
-                                              ],
-                                            ),
-                                            Text(
-                                              "   Data",
-                                              style: TextStyle(
-                                                color: Colors.greenAccent,
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('products')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return snapshot.hasData
+                            ? SingleChildScrollView(
+                                padding: const EdgeInsets.all(
+                                  15,
+                                ),
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: List.generate(
+                                      snapshot.data!.docs.length,
+                                      (index) => InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      DetailScreen(
+                                                          data: snapshot
+                                                              .data!.docs[index]
+                                                              .data()),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 9,
+                                                  left: 9,
+                                                  bottom: 10),
+                                              child: Material(
+                                                borderRadius:
+                                                    BorderRadius.circular(14),
+                                                elevation: 10,
+                                                child: Container(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Image.network(
+                                                          snapshot.data!
+                                                                  .docs[index]
+                                                                  .data()[
+                                                              "imageURL"][0],
+                                                          height:
+                                                              Get.height * 0.18,
+                                                          width:
+                                                              Get.width * 0.38,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Flexible(
+                                                              child: Text(
+                                                                "  ${snapshot.data!.docs[index].data()["title"]}",
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "₹ ${snapshot.data!.docs[index].data()["originalPrice"]}    ",
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .redAccent,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .lineThrough,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          "   ₹ ${snapshot.data!.docs[index].data()["price"]}    ",
+                                                          style: TextStyle(
+                                                            color: Colors
+                                                                .greenAccent,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  height: Get.height * 0.25,
+                                                  width: Get.width * 0.38,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      14,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 5,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      height: Get.height * 0.25,
-                                      width: Get.width * 0.38,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                          )),
                                 ),
-                              )),
-                    ),
-                  ),
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              );
+                      }),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.08,
                     child: ListView.builder(
@@ -309,6 +429,128 @@ class _HomeState extends State<Home> {
                       scrollDirection: Axis.horizontal,
                     ),
                   ),
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('products')
+                          .where(
+                            'category',
+                            isEqualTo: category2.keys.elementAt(
+                                Provider.of<ChoiceChipProvider>(context)
+                                    .choice),
+                          )
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return snapshot.hasData
+                            ? SingleChildScrollView(
+                                padding: const EdgeInsets.all(
+                                  15,
+                                ),
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: List.generate(
+                                      snapshot.data!.docs.length,
+                                      (index) => InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      DetailScreen(
+                                                          data: snapshot
+                                                              .data!.docs[index]
+                                                              .data()),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 9,
+                                                  left: 9,
+                                                  bottom: 10),
+                                              child: Material(
+                                                borderRadius:
+                                                    BorderRadius.circular(14),
+                                                elevation: 10,
+                                                child: Container(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Image.network(
+                                                          snapshot.data!
+                                                                  .docs[index]
+                                                                  .data()[
+                                                              "imageURL"][0],
+                                                          height:
+                                                              Get.height * 0.18,
+                                                          width:
+                                                              Get.width * 0.38,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Flexible(
+                                                              child: Text(
+                                                                "  ${snapshot.data!.docs[index].data()["title"]}",
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "₹ ${snapshot.data!.docs[index].data()["originalPrice"]}    ",
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .redAccent,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .lineThrough,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          "   ₹ ${snapshot.data!.docs[index].data()["price"]}    ",
+                                                          style: TextStyle(
+                                                            color: Colors
+                                                                .greenAccent,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  height: Get.height * 0.25,
+                                                  width: Get.width * 0.38,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      14,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                ),
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              );
+                      }),
                 ],
               ),
               // SizedBox(
@@ -341,35 +583,51 @@ class topWidgets extends StatelessWidget {
     super.key,
     required this.textArg,
     required this.colorArg,
+    required this.image,
   });
   final String textArg;
+  final String image;
   final Color colorArg;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      height: Get.height * 0.15,
-      width: Get.width * 0.25,
+      height: Get.height * 0.18,
+      width: Get.width * 0.3,
       decoration: BoxDecoration(
+        border: Border.all(color: Colors.black.withOpacity(0.2)),
+        image: DecorationImage(
+          image: AssetImage(
+            image,
+          ),
+          opacity: 0.5,
+          fit: BoxFit.cover,
+        ),
         // gradient: ,
         borderRadius: BorderRadius.circular(15),
-        color: colorArg,
+        color: Colors.white,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 10,
+            child: Icon(
+              CupertinoIcons.chevron_right,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.black,
+            radius: 15,
           ),
           Text(
             textArg,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22,
-              color: Colors.white,
+              color: Colors.black.withOpacity(
+                0.8,
+              ),
             ),
           )
         ],
@@ -379,17 +637,9 @@ class topWidgets extends StatelessWidget {
 }
 
 List<String> imageList = [
-  'https://cdn.pixabay.com/photo/2019/03/15/09/49/girl-4056684_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2020/12/15/16/25/clock-5834193__340.jpg',
-  'https://cdn.pixabay.com/photo/2020/09/18/19/31/laptop-5582775_960_720.jpg',
-  'https://media.istockphoto.com/photos/woman-kayaking-in-fjord-in-norway-picture-id1059380230?b=1&k=6&m=1059380230&s=170667a&w=0&h=kA_A_XrhZJjw2bo5jIJ7089-VktFK0h0I4OWDqaac0c=',
-  'https://cdn.pixabay.com/photo/2019/11/05/00/53/cellular-4602489_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2017/02/12/10/29/christmas-2059698_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2020/01/29/17/09/snowboard-4803050_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2020/02/06/20/01/university-library-4825366_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2020/11/22/17/28/cat-5767334_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2020/12/13/16/22/snow-5828736_960_720.jpg',
-  'https://cdn.pixabay.com/photo/2020/12/09/09/27/women-5816861_960_720.jpg',
+  'https://firebasestorage.googleapis.com/v0/b/rewear-crowd.appspot.com/o/download.jpeg?alt=media&token=80b2a5c2-4d8b-41da-ae01-e21fdb07f0d4',
+  'https://firebasestorage.googleapis.com/v0/b/rewear-crowd.appspot.com/o/Summer_Sale_Background_4.jpg?alt=media&token=3eb58212-bcc1-4758-b091-a55fb7f58f7f',
+  'https://firebasestorage.googleapis.com/v0/b/rewear-crowd.appspot.com/o/5292119.jpg?alt=media&token=8f1c69d8-8857-40cf-b8f4-bd666724d7b3',
 ];
 
 AppBar buildAppBar() {

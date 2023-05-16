@@ -17,7 +17,29 @@ Map category2 = {
     "Bottomwear",
     "Outerwear",
   ],
-  "Kids": [
+  "Other": [
+    "Topwear",
+    "Bottomwear",
+    "Outerwear",
+  ],
+};
+Map category3 = {
+  "TOPWEAR": [
+    "Topwear",
+    "Bottomwear",
+    "Outerwear",
+  ],
+  "BOTTOMWEAR": [
+    "Topwear",
+    "Bottomwear",
+    "Outerwear",
+  ],
+  "OUTERWEAR": [
+    "Topwear",
+    "Bottomwear",
+    "Outerwear",
+  ],
+  "ON SALE": [
     "Topwear",
     "Bottomwear",
     "Outerwear",
@@ -33,5 +55,5 @@ List<Color> color = [
 Map categoryImage = {
   "Male": "Assets/Lottie/male.json",
   "Female": "Assets/Lottie/female.json",
-  "Kids": "Assets/Lottie/kids.json"
+  "Other": "Assets/Lottie/kids.json"
 };
